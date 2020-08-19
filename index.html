@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel = "stylesheet" href = "style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <title>A Simple Todo List</title>
+</head>
+<body>
+    <header id = "main-header">
+        <h1 id = "main-header-heading">To Do</h1>
+        <form id = "main-header-form">
+            <i class="fa fa-search" aria-hidden="true"></i>
+            <input id = "filter" type = "text" placeholder = "Search a task...">
+            <i class="fa fa-times" aria-hidden="true"></i>
+        </form>
+    </header>
+
+    <div id = "hero">
+        <div id = "side-nav"></div>
+
+        <div id = "main-container">
+
+            <div id = "container-heading">
+                <h1 id = "container-heading-text">Tasks</h1>
+            </div>
+
+            <div id = "add-task">
+                <input id = "add-task-input" type = "text" placeholder = "Add a New Task...">
+                <i id = "add-task-icon" class="fa fa-plus" aria-hidden="true"></i>
+            </div>
+
+            <div id = "task-list-container">
+                <ul id = "task-list">
+                    <!-- List items to be added here -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <script src = 'main.js'></script>
+</body>
+</html>

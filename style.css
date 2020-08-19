@@ -1,0 +1,198 @@
+/* Global */
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* The Main Header */
+#main-header {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 15%;
+    background-color: #810000;
+}
+
+/* The Main Header Heading */
+#main-header-heading {
+    position: absolute;
+    left: 5%;
+    top: 7%;
+    color: #e97171;
+}
+/* The Main Header Form */
+#main-header-form {
+    position: absolute;
+    left: 50%;
+    width: 30%;
+    top: 50%;
+    height: 30%;
+    transform: translate(-50%, -50%);
+    background-color: #e97171;
+    color: #810000;
+}
+
+#main-header-form input {
+    position: absolute;
+    left: 10%;
+    width: 80%;
+    top: 0%;
+    height: 100%;
+    background-color: #e97171;
+    border: none;
+    box-sizing: border-box;
+    cursor: pointer;
+    color: #810000;
+}
+
+#main-header-form ::placeholder {
+    color: #810000;
+}
+
+#main-header-form input:focus { /* Removing the default outline while focus */
+    outline: none;
+}
+
+#main-header-form .fa {
+    position: absolute;
+    top: 0%;
+    height: 100%;
+    width: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+#main-header-form .fa-search {
+    left: 0%;
+    font-size: 1.3em;
+}
+
+#main-header-form .fa-times {
+    right: 0%; 
+}
+
+/* The Hero Section */
+#hero {
+    position: absolute;
+    top: 15%;
+    height: 85%;
+    left: 0%;
+    width: 100%;
+    background-color: #ffcb8e;
+}
+
+/* The side navigation bar */
+#side-nav {
+    position: absolute;
+    left: 0%;
+    top: 0%;
+    height: 100%;
+    width: 20%;
+    background-color: #e97171;
+}
+
+/* The main container */
+#main-container {
+    position: absolute;
+    left: 20%;
+    width: 80%;
+    top: 0%;
+    height: 100%;
+    background-color: #ffcb8e;
+}
+
+/* Container Heading*/
+#container-heading {
+    position: absolute;
+    top: 0%;
+    height: 15%;
+    left: 0%;
+    width: 100%;
+    color: #810000;
+}
+
+/* Container Heading Text */
+#container-heading-text {
+    position: absolute;
+    top: 0%;
+    left: 5%;
+}
+
+/* The Add Task */
+#add-task {
+    position: absolute;
+    top: 10%;
+    height: 15%;
+    left: 0%;
+    width: 100%;
+}
+
+/* The Add Task Input */
+#add-task-input {
+    position: absolute;
+    left: 5%;
+    width: 30%;
+    top: 50%;
+    transform: translate(0, -50%);
+    height: 30%;
+}
+
+/* The Add Task Icon */
+#add-task-icon {
+    position: absolute;
+    left: 37%;
+    top: 50%;
+    transform: translate(0%, -50%);
+    font-size: 1.7em;
+    cursor: pointer;
+} 
+
+/* The Task List Container*/
+#task-list-container {
+    position: absolute;
+    top: 25%;
+    height: 75%;
+    left: 0%;
+    width: 100%;
+    background-color: #ffcb8e;
+}
+
+/* The Task List */
+#task-list {
+    position: absolute;
+    left: 5%;
+    width: 90%;
+    top: 0%;
+    height: 100%;
+    background-color: #ffcb8e;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow: auto;
+}
+
+/* The Task List Items */
+.task-list-item {
+    background-color: #e97171;
+    color: #810000;
+    border-bottom: 2px solid #810000;
+    height: 10%;
+    display: flex;
+    align-items: center;
+}
+.task-list-checkbox {
+    margin-left: 5px;
+}
+.task-list-text {
+    margin-left: 10px;
+    width: 95%;
+}
+#task-list .fa-trash {
+    margin-right: 5px;
+    cursor: pointer;
+}
