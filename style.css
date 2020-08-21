@@ -6,6 +6,16 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+/* CSS variables */
+:root {
+    --color1: #41444b;
+    --color2: #52575d;
+    --color3: #fddb3a;
+    --color4: #f6f4e6;
+    --delete: rgb(158, 12, 12);
+    --delete-hover: rgb(197, 10, 10);
+}
+
 /* The Main Header */
 #main-header {
     position: absolute;
@@ -13,7 +23,7 @@ body {
     left: 0%;
     width: 100%;
     height: 15%;
-    background-color: #810000;
+    background-color: var(--color1);
 }
 
 /* The Main Header Heading */
@@ -21,7 +31,7 @@ body {
     position: absolute;
     left: 5%;
     top: 7%;
-    color: #e97171;
+    color: var(--color3);
 }
 /* The Main Header Form */
 #main-header-form {
@@ -31,8 +41,8 @@ body {
     top: 50%;
     height: 30%;
     transform: translate(-50%, -50%);
-    background-color: #e97171;
-    color: #810000;
+    background-color: var(--color4);
+    color: var(--color1);
 }
 
 #main-header-form input {
@@ -41,15 +51,15 @@ body {
     width: 80%;
     top: 0%;
     height: 100%;
-    background-color: #e97171;
+    background-color: var(--color4);
     border: none;
     box-sizing: border-box;
     cursor: pointer;
-    color: #810000;
+    color: var(--color1);
 }
 
 #main-header-form ::placeholder {
-    color: #810000;
+    color: var(--color1);
 }
 
 #main-header-form input:focus { /* Removing the default outline while focus */
@@ -74,6 +84,7 @@ body {
 
 #main-header-form .fa-times {
     right: 0%; 
+    cursor: pointer;
 }
 
 /* The Hero Section */
@@ -83,7 +94,6 @@ body {
     height: 85%;
     left: 0%;
     width: 100%;
-    background-color: #ffcb8e;
 }
 
 /* The side navigation bar */
@@ -93,7 +103,7 @@ body {
     top: 0%;
     height: 100%;
     width: 20%;
-    background-color: #e97171;
+    background-color: var(--color2);
 }
 
 /* The main container */
@@ -103,7 +113,7 @@ body {
     width: 80%;
     top: 0%;
     height: 100%;
-    background-color: #ffcb8e;
+    background-color: var(--color4);
 }
 
 /* Container Heading*/
@@ -113,7 +123,7 @@ body {
     height: 15%;
     left: 0%;
     width: 100%;
-    color: #810000;
+    color: var(--color1);
 }
 
 /* Container Heading Text */
@@ -140,6 +150,16 @@ body {
     top: 50%;
     transform: translate(0, -50%);
     height: 30%;
+    cursor: pointer;
+    color: var(--color2);
+}
+
+#add-task-input:focus {
+    outline-color: var(--color1);
+}
+
+#add-task-input ::placeholder {
+    color: var(--color1);
 }
 
 /* The Add Task Icon */
@@ -150,6 +170,7 @@ body {
     transform: translate(0%, -50%);
     font-size: 1.7em;
     cursor: pointer;
+    color: var(--color1);
 } 
 
 /* The Task List Container*/
@@ -159,7 +180,7 @@ body {
     height: 75%;
     left: 0%;
     width: 100%;
-    background-color: #ffcb8e;
+    background-color: var(--color4);
 }
 
 /* The Task List */
@@ -169,7 +190,7 @@ body {
     width: 90%;
     top: 0%;
     height: 100%;
-    background-color: #ffcb8e;
+    background-color: var(--color4);
     margin: 0;
     padding: 0;
     list-style: none;
@@ -178,21 +199,26 @@ body {
 
 /* The Task List Items */
 .task-list-item {
-    background-color: #e97171;
-    color: #810000;
-    border-bottom: 2px solid #810000;
+    background-color: var(--color2);
+    color: var(--color4);
+    border-bottom: 2px solid var(--color1);
     height: 10%;
     display: flex;
     align-items: center;
 }
 .task-list-checkbox {
-    margin-left: 5px;
+    margin-left: 10px;
 }
 .task-list-text {
     margin-left: 10px;
     width: 95%;
 }
 #task-list .fa-trash {
-    margin-right: 5px;
+    margin-right: 10px;
     cursor: pointer;
+    color: var(--delete);
+    font-size: 1.4em;
+}
+#task-list .fa-trash:hover {
+    color: var(--delete-hover);
 }
