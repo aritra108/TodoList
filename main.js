@@ -1,31 +1,35 @@
+/************************** The Class Task: Represents each task ************************* */
+class Task {
+    constructor (title) {
+        this.title = title;
+    }
+}
+
 /************************** The Class UI : Handles all UI Operations ********************* */
 
 class UI {
+    
+    static displayTasks () {
+        const tasks = Storage.getTasks();
+
+        tasks.forEach(task => UI.addNewTask(task));
+    }
 
     // Adding a task to the UI
-    static addNewTask (e) {
+    static addNewTask (task) {
 
-        const addTaskInput = document.querySelector('#add-task-input');
-        const inputValue = addTaskInput.value;
+        // Create the new li element 
+        const li = document.createElement('li');
+        li.className = 'task-list-item';
+        li.innerHTML = `
+            <input class = 'task-list-checkbox' type = 'checkbox'></input>
+            <p class = 'task-list-text'>${task.title}</p>
+            <i class = 'fa fa-trash' aria-hidden = 'true'></i>
+        `;
 
-        // if the input field is not empty 
-        if ( inputValue != "" ) { 
+        // Append the new li to the existing ul 
+         document.querySelector('#task-list').appendChild(li); 
 
-            // Create the new li element 
-            const li = document.createElement('li');
-            li.className = 'task-list-item';
-            li.innerHTML = `
-                <input class = 'task-list-checkbox' type = 'checkbox'></input>
-                <p class = 'task-list-text'>${inputValue}</p>
-                <i class = 'fa fa-trash' aria-hidden = 'true'></i>
-            `;
-
-            // Append the new li to the existing ul 
-            document.querySelector('#task-list').appendChild(li);
-
-            // Clear the input field 
-            addTaskInput.value = "";
-        } 
     } 
 
     // Deleting a task from the UI
@@ -94,6 +98,50 @@ class UI {
 
 } // end of class 
 
+/*************** The Class Storage: Handles the local storage ***************** */
+
+class Storage {
+
+    /* Fetches the tasks from local storage */
+    static getTasks () { 
+
+        let tasks;
+
+        if ( localStorage.getItem('tasks') === null ) 
+            tasks = [];
+        else 
+            tasks = JSON.parse (localStorage.getItem('tasks')); // list of JS objects 
+
+        return tasks;
+
+    }
+
+    /* Adds new tasks to the local storage */
+    static addNewTask (task) { 
+
+        const tasks = this.getTasks();
+
+        tasks.push(task);
+
+        localStorage.setItem ('tasks', JSON.stringify(tasks));
+
+    }
+
+    /* Deletes task from the local storage */
+    static deleteTask (taskTitle) {
+        const tasks = Storage.getTasks();
+
+        tasks.forEach((task, index) => {
+            if ( task.title === taskTitle ) {
+                tasks.splice (index, 1);
+            }
+        })
+
+        localStorage.setItem ('tasks', JSON.stringify(tasks));
+    }
+
+}
+
 /************************** Event: Hover over Search Bar ************************/ 
 
 document.querySelector('#main-header-form').addEventListener('mouseenter', UI.hoverSearchBar);
@@ -103,19 +151,56 @@ document.querySelector('#main-header-form').addEventListener('mouseleave', UI.ho
 
 document.querySelector('#clear-search').addEventListener('click', UI.clearSearchBar);
 
-/************************** Event: Add a New Task *******************************/
 
-document.getElementById("add-task-icon").addEventListener('click', UI.addNewTask); // By the Add Icon 
- 
-document.getElementById("add-task-input").addEventListener('keyup', e => {  // By Pressing the Enter Key in the Input Field
-    if ( e.keyCode === 13 ) {
-        UI.addNewTask(e);
-    }
+/************************** EVENT: DISPLAY TASKS ********************************/
+
+document.addEventListener('DOMContentLoaded', UI.displayTasks);
+
+/************************** EVENT: ADD A NEW TASK *******************************/
+
+/* By the Add Icon */
+document.getElementById("add-task-icon").addEventListener('click', addTask) 
+
+/* By Pressing the Enter Key in the Input field */
+document.getElementById("add-task-input").addEventListener('keyup', e => {
+    if ( e.keyCode === 13 )
+        addTask(e);
 });
+
+/* The addTask() method */
+function addTask (e) {
+
+    const inputValue = document.getElementById("add-task-input").value;
+
+    // Check if input is empty 
+    if ( inputValue === "" )
+        return;
+
+    // Instantiate the Task Class 
+    const task = new Task (inputValue);
+    
+    // Add Task to UI
+    UI.addNewTask(task);
+
+    // Add Task to the Local Storage 
+    Storage.addNewTask(task);
+
+    // Clear the input field 
+    document.getElementById("add-task-input").value = "";
+}
 
 /************************** Event: Delete a Task ****************************** */
 
-document.querySelector('#task-list').addEventListener('click', UI.deleteTask);
+document.querySelector('#task-list').addEventListener('click', e => {
+
+    // Delete the task from the UI
+    UI.deleteTask(e);
+
+    // Delete the task from the local storage 
+    if ( e.target.classList.contains('fa-trash')) {
+        Storage.deleteTask(e.target.previousElementSibling.textContent);
+    }
+});
 
 /************************** Event: Check a Task ******************************* */
 
