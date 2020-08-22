@@ -1,117 +1,126 @@
-/************************ The Main Header Form ************************** */ 
+/************************** The Class UI : Handles all UI Operations ********************* */
 
-let mainHeaderForm = document.getElementById('main-header-form');
-let mainHeaderInput = document.querySelector('#main-header-form input');
+class UI {
 
-// The Hovering Effect
-mainHeaderForm.addEventListener('mouseenter', e => {
-    mainHeaderForm.style.backgroundColor = '#ffcb8e';
-    mainHeaderInput.style.backgroundColor = '#ffcb8e';
-});
+    // Adding a task to the UI
+    static addNewTask (e) {
 
-mainHeaderForm.addEventListener('mouseleave', e => {
-    mainHeaderForm.style.backgroundColor = '#e97171';
-    mainHeaderInput.style.backgroundColor = '#e97171';
-});
+        const addTaskInput = document.querySelector('#add-task-input');
+        const inputValue = addTaskInput.value;
 
+        // if the input field is not empty 
+        if ( inputValue != "" ) { 
 
-/*********************** Adding elements in the task list *************************/
+            // Create the new li element 
+            const li = document.createElement('li');
+            li.className = 'task-list-item';
+            li.innerHTML = `
+                <input class = 'task-list-checkbox' type = 'checkbox'></input>
+                <p class = 'task-list-text'>${inputValue}</p>
+                <i class = 'fa fa-trash' aria-hidden = 'true'></i>
+            `;
 
-let filterInput = document.getElementById ('filter');
-let addTaskInput = document.getElementById("add-task-input");
-let addTaskIcon = document.getElementById("add-task-icon");
-let taskList = document.getElementById("task-list");
+            // Append the new li to the existing ul 
+            document.querySelector('#task-list').appendChild(li);
 
-addTaskIcon.addEventListener('click', addNewTask); // By the Add Icon 
-addTaskInput.addEventListener('keyup', e => { // by Pressing the Enter Key in the input field 
+            // Clear the input field 
+            addTaskInput.value = "";
+        } 
+    } 
+
+    // Deleting a task from the UI
+    static deleteTask (e) {
+        if ( e.target.classList.contains('fa-trash') ) { // If the clicked item contains the target class 
+            if ( confirm("Are you sure?") ) 
+                e.target.parentElement.remove();
+        }
+    }  
+
+    // Checking the Checkbox
+    static checkTask (e) { 
+
+        if ( e.target.classList.contains('task-list-checkbox') ) {
+            const currText = e.target.nextElementSibling;
+
+            if ( currText.style.color == 'var(--color3)' ) {
+                currText.style.color = 'var(--color4)';
+                currText.style.textDecoration = 'none';
+            }
+            else {
+                currText.style.color = 'var(--color3)';
+                currText.style.textDecoration = 'line-through';
+            }
+        }
+
+    } 
+
+    // Searching for a particular existing task 
+    static filterTasks (e) { 
+
+        const filterInputValue = document.querySelector('#filter').value.toLowerCase(); // Converting to lowercase 
+
+        const allTasks = document.getElementsByClassName('task-list-item'); // Extracting all the list items 
+        const allTexts = document.getElementsByClassName('task-list-text'); // Extracting all the list texts 
+        
+        for ( let i = 0; i < allTasks.length; i++ ) {
+            const currTask = allTasks[i];
+            const currText = allTexts[i].textContent.toLowerCase();
+            if ( currText.indexOf(filterInputValue) != -1 ) {
+                currTask.style.display = 'flex';
+            }
+            else currTask.style.display = 'none';
+        }
+    }
+
+    // Hovering Effect over Search Bar
+    static hoverSearchBar (e) {
+        let mainHeaderForm = document.getElementById('main-header-form');
+        let mainHeaderInput = document.querySelector('#main-header-form input');
+        if ( e.type === 'mouseenter' ) {
+            mainHeaderForm.style.backgroundColor = 'var(--color3)';
+            mainHeaderInput.style.backgroundColor = 'var(--color3)';
+        }
+        else if ( e.type === 'mouseleave' ) {
+            mainHeaderForm.style.backgroundColor = 'var(--color4)';
+            mainHeaderInput.style.backgroundColor = 'var(--color4)';
+        }
+    }
+
+    // Clear the Search Bar
+    static clearSearchBar (e) {
+        const input = e.target.previousElementSibling;
+        input.value = "";
+    }
+
+} // end of class 
+
+/************************** Event: Hover over Search Bar ************************/ 
+
+document.querySelector('#main-header-form').addEventListener('mouseenter', UI.hoverSearchBar);
+document.querySelector('#main-header-form').addEventListener('mouseleave', UI.hoverSearchBar);
+
+/**************** Event: Click the cross button on search bar *******************/
+
+document.querySelector('#clear-search').addEventListener('click', UI.clearSearchBar);
+
+/************************** Event: Add a New Task *******************************/
+
+document.getElementById("add-task-icon").addEventListener('click', UI.addNewTask); // By the Add Icon 
+ 
+document.getElementById("add-task-input").addEventListener('keyup', e => {  // By Pressing the Enter Key in the Input Field
     if ( e.keyCode === 13 ) {
-        addNewTask();
+        UI.addNewTask(e);
     }
-})
+});
 
-function addNewTask (e) {
+/************************** Event: Delete a Task ****************************** */
 
-    let inputValue = addTaskInput.value;
+document.querySelector('#task-list').addEventListener('click', UI.deleteTask);
 
-    if ( inputValue != "" ) { /* If input field is not empty */
+/************************** Event: Check a Task ******************************* */
 
-        /* Create a new li element */
-        let newTask = document.createElement('li');
-        newTask.className = 'task-list-item';
+document.querySelector('#task-list').addEventListener('click', UI.checkTask);
 
-        /* Create new checkbox */
-        let newTaskCheckbox = document.createElement('input');
-        newTaskCheckbox.className = 'task-list-checkbox';
-        newTaskCheckbox.setAttribute('type', 'checkbox');
-        newTask.appendChild(newTaskCheckbox);
+/************************** Event: Filter Tasks  ****************************** */
 
-        /* Create new p */
-        let newTaskText = document.createElement('p');
-        newTaskText.className = 'task-list-text';
-        let newTaskTextNode = document.createTextNode(inputValue);
-        newTaskText.appendChild(newTaskTextNode);
-        newTask.appendChild(newTaskText);
-
-        /* Create new i */
-        let newTaskDeleteIcon = document.createElement('i');
-        newTaskDeleteIcon.className = 'fa fa-trash';
-        newTaskDeleteIcon.setAttribute('aria-hidden', 'true');
-        newTask.appendChild(newTaskDeleteIcon);
-
-        /* Append the new li to the existing ul */
-        taskList.appendChild(newTask);
-
-        /* Clear the input field */
-        addTaskInput.value = "";
-    }
-};
-
-/********************************** Checking a Task ******************************* */
-taskList.addEventListener('click', e => {
-    if ( e.target.classList.contains('task-list-checkbox') ) {
-        let currText = e.target.nextElementSibling;
-        console.log ('Checkbox clicked');
-        console.log ('Text Color = ' + currText.style.color);
-        if ( currText.style.color == 'rgb(204, 204, 204)' ) {
-            console.log (1);
-            currText.style.color = '#810000';
-            currText.style.textDecoration = 'none';
-        }
-        else {
-            currText.style.color = '#ccc';
-            currText.style.textDecoration = 'line-through';
-        }
-    }
-})
-
-
-/*************************** Deleting a Task from the List **************************** */
-
-taskList.addEventListener('click', e => {
-    if ( e.target.classList.contains('fa-trash') ) { /* If the clicked item contains the mentioned class */
-        if ( confirm("Are you sure?") ) {
-            let currTaskItem = e.target.parentElement;
-            taskList.removeChild(currTaskItem);
-        }
-    }
-})
-
-/**************************** Filtering Tasks ************************************* */
-
-filterInput.addEventListener ('keyup', e => { // Fuunction will trigger in every key up
-
-    let filterInputValue = filterInput.value.toLowerCase(); // Converting to lowercase 
-
-    let allTasks = document.getElementsByClassName('task-list-item'); // Extracting all the list items 
-    let allTexts = document.getElementsByClassName('task-list-text'); // Extracting all the list texts 
-    
-    for ( let i = 0; i < allTasks.length; i++ ) {
-        let currTask = allTasks[i];
-        let currText = allTexts[i].textContent.toLowerCase();
-        if ( currText.indexOf(filterInputValue) != -1 ) {
-            currTask.style.display = 'flex';
-        }
-        else currTask.style.display = 'none';
-    }
-
-})
+document.getElementById ('filter').addEventListener ('keyup', UI.filterTasks);
